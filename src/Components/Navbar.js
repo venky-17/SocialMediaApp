@@ -22,9 +22,9 @@ const Navbar = ()=>{
                 <div>
                     <p>{!user &&   (
 
-                        <div>  <Link to="/login">Login</Link>
+                        <>  <Link to="/login">Login</Link>
                                <Link to="/signup">SignUp</Link>
-                        </div>
+                        </>
                     )}</p>
                 </div>
 
@@ -34,6 +34,7 @@ const Navbar = ()=>{
                 <p>{user?.displayName}</p>
                  {(!user?.displayName ? `${user?.email}`: "")}
                 <img src={user?.photoURL} alt="" />
+                <Link to="/createpost">Create Post</Link>
                 <button onClick={handleLogOut}>Logout</button>
                 </div>
                )

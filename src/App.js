@@ -7,6 +7,7 @@ import SignUp from './Components/Signup';
 import Navbar from './Components/Navbar';
 import AuthHome from './Components/AuthHome';
 import PrivateRoute from "./Components/PrivateRoute"
+import CreatePost from './Components/CreatePost';
 
 
 function App() {
@@ -19,14 +20,8 @@ function App() {
         <Route path="/" element={<Home/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/signup" element={<SignUp/>}></Route>
-        <Route
-      path="/home"
-      element={
-        <PrivateRoute>
-          <AuthHome />
-        </PrivateRoute>
-      }
-    />
+        <Route path="/home" element={<PrivateRoute><AuthHome /></PrivateRoute> }/>
+        <Route path="/createpost" element={<CreatePost/>}></Route>
      
       </Routes>
     </Router>
