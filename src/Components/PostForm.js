@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom"
 
 
 
-const PostFarm =()=>{
+const PostForm =()=>{
 
     const navigate = useNavigate()
 
@@ -61,4 +61,4 @@ const createPost = async (data)=>{
     )
 }
 
-export default PostFarm
+export default PostForm

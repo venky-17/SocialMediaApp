@@ -1,10 +1,10 @@
-import PostFarm from "./PostForm"
+import PostForm from "./PostForm"
 
 const CreatePost =()=>{
     return(
         <>
              <h1>create a new post</h1>
-           <PostFarm/>  
+           <PostForm/>  
            
         </>
     )
