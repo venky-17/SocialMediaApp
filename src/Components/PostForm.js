@@ -1,7 +1,7 @@
 import  {useForm} from "react-hook-form"
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
-import { databse } from "../Firebase/Configure"
+import { database } from "../Firebase/Configure"
 import {addDoc, collection} from "firebase/firestore"
 import {useAuthState} from "react-firebase-hooks/auth"
 import {provider, auth} from "../Firebase/Configure"
@@ -27,7 +27,7 @@ const {register, handleSubmit, formState: {errors}} = useForm({
 
 
 
-const postRef = collection(databse, "posts")
+const postRef = collection(database, "posts")
 
 const createPost = async (data)=>{
 
