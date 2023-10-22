@@ -81,7 +81,7 @@ const Post = (props) => {
         <div key={post.id} className="post">
           <h2>{post.title}</h2>
           <p>{post.description}</p>
-          <h5>@{post.username}</h5>
+          <h5>{post.username ? `@${post.username}` : `@${user.email}`}</h5>
           <button onClick={() => toggleLike(post)}>
             {likedPosts.includes(post.id) ? "Dislike" : "Like"} &#128077;
           </button>
