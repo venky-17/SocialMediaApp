@@ -4,7 +4,7 @@ import {yupResolver} from "@hookform/resolvers/yup"
 import { database } from "../Firebase/Configure"
 import {addDoc, collection} from "firebase/firestore"
 import {useAuthState} from "react-firebase-hooks/auth"
-import {provider, auth} from "../Firebase/Configure"
+import { auth} from "../Firebase/Configure"
 import {useNavigate} from "react-router-dom"
 
 
