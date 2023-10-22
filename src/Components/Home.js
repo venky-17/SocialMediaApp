@@ -1,6 +1,10 @@
+import "../App.css"
+
 const Home =()=>{
     return (
-        <h1>Welcome to social pathetic media</h1>
+        <div className="HomePage">
+        <h1 className="HomePgHeading">Welcome to social pathetic media</h1>
+        </div>
     )
     }
     
