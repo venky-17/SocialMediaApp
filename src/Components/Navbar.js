@@ -1,51 +1,57 @@
-import {Link} from "react-router-dom"
-import {provider, auth} from "../Firebase/Configure"
-import {useAuthState} from "react-firebase-hooks/auth"
-import {signOut} from "firebase/auth"
-import {useNavigate} from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
+import { provider, auth } from "../Firebase/Configure";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import "./CSS/Navbar.css"; // Import the CSS file
 
-const Navbar = ()=>{
-    const navigate = useNavigate()
+const Navbar = () => {
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
-    const [user] = useAuthState(auth)
-    const handleLogOut = async ()=>{
-        await signOut(auth)
-        navigate("/")
+  const handleLogOut = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
 
+  return (
+    <div className="navbar-container">
+      <Link to="/home" className="nav-link">
+        Home
+      </Link>
 
-    }
-    return(
-        <>
-            <Link to="/">Home</Link>
-          
+      <div>
+        <p>
+          {!user && (
+            <>
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+              <Link to="/signup" className="nav-link">
+                SignUp
+              </Link>
+            </>
+          )}
+        </p>
+      </div>
 
-                <div>
-                    <p>{!user &&   (
+      {user && (
+        <div className="user-info">
+          <p>
+            {user?.displayName ? user?.displayName : user?.email}
+          </p>
+          <img src={user?.photoURL} alt="" />
+          <Link to="/createpost" className="nav-link">
+            Create Post
+          </Link>
+          <button onClick={handleLogOut} className="user-info-button">
+            Logout
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
-                        <>  <Link to="/login">Login</Link>
-                               <Link to="/signup">SignUp</Link>
-                        </>
-                    )}</p>
-                </div>
-
-            <div>
-               {user && (
-                <div>
-                <p>{user?.displayName}</p>
-                 {(!user?.displayName ? `${user?.email}`: "")}
-                <img src={user?.photoURL} alt="" />
-                <Link to="/createpost">Create Post</Link>
-                <button onClick={handleLogOut}>Logout</button>
-                </div>
-               )
-               
-               }
-            </div>
-            
-         
-
-        </>
-    )
-}
-
-export default Navbar
+export default Navbar;

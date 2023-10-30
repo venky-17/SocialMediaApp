@@ -3,7 +3,7 @@ import PostForm from "./PostForm"
 const CreatePost =()=>{
     return(
         <>
-             <h1>create a new post</h1>
+              <h1 style={{ textAlign: "center" }}>Create a new Post</h1>
            <PostForm/>  
            
         </>

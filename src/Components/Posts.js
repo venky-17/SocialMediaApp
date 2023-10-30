@@ -1,9 +1,19 @@
-import { getDocs, collection, addDoc, query, where, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  query,
+  where,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 import { database } from "../Firebase/Configure";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { provider, auth } from "../Firebase/Configure";
+import "./CSS/Posts.css"; // Import the CSS file for styling
 
 const Post = (props) => {
   const [likeNumbers, setLikeNumbers] = useState({});
@@ -76,19 +86,22 @@ const Post = (props) => {
   };
 
   return (
-    <>
+    <div className="post-container">
       {posts.map((post) => (
         <div key={post.id} className="post">
           <h2>{post.title}</h2>
           <p>{post.description}</p>
           <h5>{post.username ? `@${post.username}` : `@${user.email}`}</h5>
-          <button onClick={() => toggleLike(post)}>
+          <button
+            onClick={() => toggleLike(post)}
+            className={likedPosts.includes(post.id) ? "dislike-button" : "like-button"}
+          >
             {likedPosts.includes(post.id) ? "Dislike" : "Like"} &#128077;
           </button>
-          <p>Likes: {likeNumbers[post.id] || 0}</p>
+          <p className="like-count">Likes: {likeNumbers[post.id] || 0}</p>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

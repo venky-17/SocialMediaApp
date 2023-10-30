@@ -1,64 +1,62 @@
-import  {useForm} from "react-hook-form"
-import * as yup from "yup"
-import {yupResolver} from "@hookform/resolvers/yup"
-import { database } from "../Firebase/Configure"
-import {addDoc, collection} from "firebase/firestore"
-import {useAuthState} from "react-firebase-hooks/auth"
-import { auth} from "../Firebase/Configure"
-import {useNavigate} from "react-router-dom"
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { database } from "../Firebase/Configure";
+import { addDoc, collection } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../Firebase/Configure";
+import { useNavigate } from "react-router-dom";
+import "./CSS/PostForm.css"; // Import the CSS file
 
+const PostForm = () => {
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
+  const schema = yup.object().shape({
+    title: yup.string().required("Add a title"),
+    description: yup.string().required("Add a description"),
+  });
 
-const PostForm =()=>{
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-    const navigate = useNavigate()
+  const postRef = collection(database, "posts");
 
-    const [user] = useAuthState(auth)
+  const createPost = async (data) => {
+    await addDoc(postRef, {
+      title: data.title,
+      description: data.description,
+      username: user?.displayName,
+      userId: user?.uid,
+    });
+    navigate("/home");
+  };
 
-const schema = yup.object().shape({
-    title: yup.string().required("add a title"),
-    description : yup.string().required("add a desc"),
+  return (
+    <div className="post-form-container">
+      <form onSubmit={handleSubmit(createPost)} className="post-form">
+        <input
+          type="text"
+          placeholder="Title"
+          {...register("title")}
+          className="form-input"
+        />
+        <p className="error-message">{errors?.title?.message}</p>
+        <textarea
+          placeholder="Description"
+          {...register("description")}
+          className="form-textarea"
+        />
+        <p className="error-message">{errors?.description?.message}</p>
+        <input type="submit" value="Create Post" className="submit-button" />
+      </form>
+    </div>
+  );
+};
 
-})
-
-const {register, handleSubmit, formState: {errors}} = useForm({
-    resolver:yupResolver(schema)
-})
-
-
-
-const postRef = collection(database, "posts")
-
-const createPost = async (data)=>{
-
-    // console.log(data);
-     await addDoc(postRef,{
-        title : data.title,
-        description : data.description,
-        username : user?.displayName,
-       userId: user?.uid, 
-
-
-     })
-    navigate("/home")
-   
-
-
-}
-
-
-    return(
-        <>
-           
-            <form action="" onSubmit={handleSubmit(createPost)}>
-                <input type="text" placeholder="title" {...register("title")} />
-                <p style={{color:"red"}}>{errors?.title?.message}</p>
-                <textarea type="text" placeholder="description" {...register("description")}/>
-                <p style={{color:"red"}}>   {errors?.description?.message}</p>
-                <input type="submit"  />
-            </form>
-        </>
-    )
-}
-
-export default PostForm
+export default PostForm;
